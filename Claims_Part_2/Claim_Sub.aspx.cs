@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using System.IO;
 
 namespace Claims_Part_2
 {
@@ -22,45 +23,113 @@ namespace Claims_Part_2
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            //Checks  if a field is empty and displays an appropriate message
-            if (string.IsNullOrEmpty(TextBox1.Text) || string.IsNullOrEmpty(TextBox2.Text) ||
-                string.IsNullOrEmpty(TextBox3.Text) || string.IsNullOrEmpty(TextBox4.Text) ||
-                string.IsNullOrEmpty(TextBox5.Text) || string.IsNullOrEmpty(TextBox6.Text))
-            {
-                MessageBox.Show("Please fill in all fields.");
-                return;
+          
+                try
+                {
+                    // Get the input values from the textboxes
+                    string lecturerId = TextBox1.Text;
+                    string programCode = TextBox2.Text;
+                    string moduleCode = TextBox3.Text;
+                    DateTime submissionDate = DateTime.Parse(TextBox4.Text);
+                    int hoursWorked = int.Parse(TextBox5.Text);
+                    decimal salaryRate = decimal.Parse(TextBox6.Text);
+                    decimal total = hoursWorked * salaryRate;
+
+                    // Define the maximum file size (in bytes) - 5MB
+                    int maxFileSize = 5 * 1024 * 1024;
+
+                    // Allowed file types
+                    string[] allowedFileTypes = { ".pdf", ".docx", ".xlsx" };
+
+                    // Check if a file is selected and a file name is provided
+                    if (!FileUpload1.HasFile)
+                    {
+                        Response.Write("<script>alert('Please upload a file.');</script>");
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(TextBox7.Text))
+                    {
+                        Response.Write("<script>alert('Please enter a file name.');</script>");
+                        return;
+                    }
+
+                    // Get the file extension
+                    string fileExtension = Path.GetExtension(FileUpload1.FileName).ToLower();
+
+                    // Check file size
+                    if (FileUpload1.PostedFile.ContentLength > maxFileSize)
+                    {
+                        Response.Write("<script>alert('File size must not exceed 5 MB.');</script>");
+                        return;
+                    }
+
+                    // Check file type
+                    if (!allowedFileTypes.Contains(fileExtension))
+                    {
+                        Response.Write("<script>alert('Invalid file type. Only .pdf, .docx, and .xlsx files are allowed.');</script>");
+                        return;
+                    }
+
+                    // Clean the file name and get the file name from the FileUpload control and textbox
+                    string fileName = TextBox7.Text.Trim().Replace(" ", "_") + fileExtension;
+
+                    // Check if folder exists, create if not
+                    string uploadFolder = Server.MapPath("~/UploadedFiles/");
+                    if (!Directory.Exists(uploadFolder))
+                    {
+                        Directory.CreateDirectory(uploadFolder); // Create folder if it doesn't exist
+                    }
+
+                    // Save the file to the server
+                    string filePath = Path.Combine(uploadFolder, fileName);
+                    FileUpload1.SaveAs(filePath);
+
+                    // Now save all data into the database
+                    using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString))
+                    {
+                        // Modify SQL query to include file-related fields
+                        string query = "INSERT INTO tblLecturer (Lecturer_ID, Program_Code, Module_Code, Submission_Date, Hours_Worked, Salary_Rate, Total, File_Name, File_Location) " +
+                                       "VALUES (@Lecturer_ID, @Program_Code, @Module_Code, @Submission_Date, @Hours_Worked, @Salary_Rate, @Total, @File_Name, @File_Location)";
+
+                        SqlCommand cmd = new SqlCommand(query, conn);
+
+                        // Add parameters for the lecturer data
+                        cmd.Parameters.AddWithValue("@Lecturer_ID", lecturerId);
+                        cmd.Parameters.AddWithValue("@Program_Code", programCode);
+                        cmd.Parameters.AddWithValue("@Module_Code", moduleCode);
+                        cmd.Parameters.AddWithValue("@Submission_Date", submissionDate);
+                        cmd.Parameters.AddWithValue("@Hours_Worked", hoursWorked);
+                        cmd.Parameters.AddWithValue("@Salary_Rate", salaryRate);
+                        cmd.Parameters.AddWithValue("@Total", total);
+
+                        // Add file details
+                        cmd.Parameters.AddWithValue("@File_Name", fileName);
+                        cmd.Parameters.AddWithValue("@File_Location", filePath);
+
+                        // Execute the query
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+
+                    // Display success message
+                    Response.Write("<script>alert('Claim submitted successfully!');</script>");
+                }
+                catch (SqlException sqlEx)
+                {
+                    // SQL-specific error handling
+                    Response.Write("<script>alert('SQL Error: " + sqlEx.Message + "');</script>");
+                }
+                catch (Exception ex)
+                {
+                    // General error handling
+                    Response.Write("<script>alert('Error: " + ex.Message + "');</script>");
+                }
             }
 
-            // Calculated (Hours_Worked * Salary_Rate) to get the Total
-            decimal hoursWorked = Convert.ToDecimal(TextBox5.Text);  
-            decimal salaryRate = Convert.ToDecimal(TextBox6.Text); 
-            decimal total = hoursWorked * salaryRate;
 
-           
-            SqlCommand cmd = new SqlCommand("INSERT INTO tblLecturer (Lecturer_ID, Program_Code, Module_Code, Submission_Date, Hours_Worked, Salary_Rate, Total) VALUES('"
-                + TextBox1.Text + "', '"
-                + TextBox2.Text + "', '"
-                + TextBox3.Text + "', '"
-                + TextBox4.Text + "', '"
-                + TextBox5.Text + "', '"
-                + TextBox6.Text + "', '"
-                + total + "')", con);
-
-            cmd.ExecuteNonQuery();
-            con.Close();
-
-            MessageBox.Show("Claim has been successfully created.");
-
-            GridView1.DataBind();
-            TextBox1.Text = "";
-            TextBox2.Text = "";
-            TextBox3.Text = "";
-            TextBox4.Text = "";
-            TextBox5.Text = "";
-            TextBox6.Text = "";
-        }
-
-        protected void Button3_Click(object sender, EventArgs e)
+            protected void Button3_Click(object sender, EventArgs e)
         {
 
         }
