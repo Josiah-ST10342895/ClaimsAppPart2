@@ -35,7 +35,7 @@ namespace Claims_Part_2
                     decimal salaryRate = decimal.Parse(TextBox6.Text);
                     decimal total = hoursWorked * salaryRate;
 
-                    // Define the maximum file size (in bytes) - 5MB
+                    // Define the maximum file size
                     int maxFileSize = 5 * 1024 * 1024;
 
                     // Allowed file types
@@ -54,7 +54,7 @@ namespace Claims_Part_2
                         return;
                     }
 
-                    // Get the file extension
+                    
                     string fileExtension = Path.GetExtension(FileUpload1.FileName).ToLower();
 
                     // Check file size
@@ -71,30 +71,30 @@ namespace Claims_Part_2
                         return;
                     }
 
-                    // Clean the file name and get the file name from the FileUpload control and textbox
+                   
                     string fileName = TextBox7.Text.Trim().Replace(" ", "_") + fileExtension;
 
-                    // Check if folder exists, create if not
+                  
                     string uploadFolder = Server.MapPath("~/UploadedFiles/");
                     if (!Directory.Exists(uploadFolder))
                     {
-                        Directory.CreateDirectory(uploadFolder); // Create folder if it doesn't exist
+                        Directory.CreateDirectory(uploadFolder);
                     }
 
-                    // Save the file to the server
+                   
                     string filePath = Path.Combine(uploadFolder, fileName);
                     FileUpload1.SaveAs(filePath);
 
-                    // Now save all data into the database
+                    // saves all data into the database
                     using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString))
                     {
-                        // Modify SQL query to include file-related fields
+                       
                         string query = "INSERT INTO tblLecturer (Lecturer_ID, Program_Code, Module_Code, Submission_Date, Hours_Worked, Salary_Rate, Total, File_Name, File_Location) " +
                                        "VALUES (@Lecturer_ID, @Program_Code, @Module_Code, @Submission_Date, @Hours_Worked, @Salary_Rate, @Total, @File_Name, @File_Location)";
 
                         SqlCommand cmd = new SqlCommand(query, conn);
 
-                        // Add parameters for the lecturer data
+                       
                         cmd.Parameters.AddWithValue("@Lecturer_ID", lecturerId);
                         cmd.Parameters.AddWithValue("@Program_Code", programCode);
                         cmd.Parameters.AddWithValue("@Module_Code", moduleCode);
@@ -103,11 +103,10 @@ namespace Claims_Part_2
                         cmd.Parameters.AddWithValue("@Salary_Rate", salaryRate);
                         cmd.Parameters.AddWithValue("@Total", total);
 
-                        // Add file details
                         cmd.Parameters.AddWithValue("@File_Name", fileName);
                         cmd.Parameters.AddWithValue("@File_Location", filePath);
 
-                        // Execute the query
+                       
                         conn.Open();
                         cmd.ExecuteNonQuery();
                         conn.Close();
@@ -118,12 +117,12 @@ namespace Claims_Part_2
                 }
                 catch (SqlException sqlEx)
                 {
-                    // SQL-specific error handling
+                  
                     Response.Write("<script>alert('SQL Error: " + sqlEx.Message + "');</script>");
                 }
                 catch (Exception ex)
                 {
-                    // General error handling
+                    
                     Response.Write("<script>alert('Error: " + ex.Message + "');</script>");
                 }
             }

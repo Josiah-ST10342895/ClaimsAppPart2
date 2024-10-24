@@ -5,15 +5,15 @@
 <head runat="server">
     <title>View Claim Statuses</title>
     <style>
-        /* Styling for the page */
+       
         body {
-            background-color: #f8f9fa; /* Set the same background color as your other pages */
+            background-color: #f8f9fa; 
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
         }
 
-        /* Navigation bar styling */
+       
         .navbar {
             background-color: #343a40;
             padding: 15px;
@@ -32,7 +32,7 @@
             color: white;
         }
 
-        /* Page content styling */
+       
         .content {
             max-width: 1200px;
             margin: 20px auto;
@@ -46,7 +46,6 @@
             color: #343a40;
         }
 
-        /* Styling for the GridView */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -74,14 +73,14 @@
 </head>
 <body>
 
-    <!-- Navigation Bar -->
+   
     <div class="navbar">
         <a href="Home.aspx">HOME</a>
         <a href="About.aspx">ABOUT</a>
         <a href="Resources.aspx">RESOURCES</a>
     </div>
 
-    <!-- Server-side form tag with GridView inside -->
+    
     <form id="form1" runat="server">
         <div class="content" style="background-color: #DDAF55">
             <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Your Claims Statuses<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="Lecturer_ID" DataSourceID="SqlDataSource1" CssClass="auto-style1" Width="1px">

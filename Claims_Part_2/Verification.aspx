@@ -79,6 +79,9 @@
                     <SortedAscendingHeaderStyle BackColor="#506C8C" />
                     <SortedDescendingCellStyle BackColor="#FFFDF8" />
                     <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+
+                       
+    
                 </asp:GridView>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -88,8 +91,10 @@
                 <br />
                 <br />&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:Button ID="Button2" runat="server" CssClass="auto-style18" Font-Bold="True" ForeColor="#00CC00" Height="34px" Text="Approve" Width="114px" OnClick="Button2_Click" />
-                <asp:Button ID="Button1" runat="server" CssClass="auto-style17" Font-Bold="True" ForeColor="#FF3300" Height="34px" Text="Decline" Width="115px" />
+                    <ItemTemplate>
+                  <asp:Button ID="ApproveButton" runat="server" Text="Approve" OnClick="Button2_Click" />
+    <asp:Button ID="DeclineButton" runat="server" Text="Decline" OnClick="Button1_Click" />
+ </ItemTemplate>
                 <br />
                 <br />&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
