@@ -7,14 +7,9 @@ using System.Web.UI.WebControls;
 
 namespace Claims_Part_2
 {
-    public partial class Verification : System.Web.UI.Page
+    public partial class ViewClaimStatuses : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Button2_Click(object sender, EventArgs e)
         {
 
         }

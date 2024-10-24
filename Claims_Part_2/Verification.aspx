@@ -66,6 +66,8 @@
                         <asp:BoundField DataField="Hours_Worked" HeaderText="Hours_Worked" SortExpression="Hours_Worked" />
                         <asp:BoundField DataField="Salary_Rate" HeaderText="Salary_Rate" SortExpression="Salary_Rate" />
                         <asp:BoundField DataField="Total" HeaderText="Total" SortExpression="Total" />
+                        <asp:BoundField DataField="File_Name " HeaderText="File_Name " SortExpression="File_Name " />
+                        <asp:BoundField DataField="File_Location" HeaderText="File_Location" SortExpression="File_Location" />
                     </Columns>
                     <EditRowStyle BackColor="#999999" />
                     <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
@@ -86,7 +88,7 @@
                 <br />
                 <br />&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:Button ID="Button2" runat="server" CssClass="auto-style18" Font-Bold="True" ForeColor="#00CC00" Height="34px" Text="Approve" Width="114px" />
+                <asp:Button ID="Button2" runat="server" CssClass="auto-style18" Font-Bold="True" ForeColor="#00CC00" Height="34px" Text="Approve" Width="114px" OnClick="Button2_Click" />
                 <asp:Button ID="Button1" runat="server" CssClass="auto-style17" Font-Bold="True" ForeColor="#FF3300" Height="34px" Text="Decline" Width="115px" />
                 <br />
                 <br />&nbsp;&nbsp;&nbsp;&nbsp;

@@ -199,6 +199,7 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
     <Content Include="Verification.aspx" />
+    <Content Include="ViewClaimStatuses.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -269,6 +270,13 @@
     </Compile>
     <Compile Include="Verification.aspx.designer.cs">
       <DependentUpon>Verification.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewClaimStatuses.aspx.cs">
+      <DependentUpon>ViewClaimStatuses.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewClaimStatuses.aspx.designer.cs">
+      <DependentUpon>ViewClaimStatuses.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
