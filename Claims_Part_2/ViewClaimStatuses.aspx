@@ -83,19 +83,18 @@
     
     <form id="form1" runat="server">
         <div class="content" style="background-color: #DDAF55">
-            <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Your Claims Statuses<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="Lecturer_ID" DataSourceID="SqlDataSource1" CssClass="auto-style1" Width="1px">
-                <Columns>
-                    <asp:BoundField DataField="Lecturer_ID" HeaderText="Lecturer_ID" ReadOnly="True" SortExpression="Lecturer_ID" />
-                    <asp:BoundField DataField="Program_Code" HeaderText="Program_Code" SortExpression="Program_Code" />
-                    <asp:BoundField DataField="Module_Code" HeaderText="Module_Code" SortExpression="Module_Code" />
-                    <asp:BoundField DataField="Submission_Date" HeaderText="Submission_Date" SortExpression="Submission_Date" />
-                    <asp:BoundField DataField="Hours_Worked" HeaderText="Hours_Worked" SortExpression="Hours_Worked" />
-                    <asp:BoundField DataField="Salary_Rate" HeaderText="Salary_Rate" SortExpression="Salary_Rate" />
-                    <asp:BoundField DataField="Total" HeaderText="Total" SortExpression="Total" />
-                    <asp:BoundField DataField="File_Name " HeaderText="File_Name " SortExpression="File_Name " />
-                    <asp:BoundField DataField="File_Location" HeaderText="File_Location" SortExpression="File_Location" />
-                </Columns>
-                </asp:GridView>
+        <h2>   <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="Lecturer_ID">
+    <Columns>
+        <asp:BoundField DataField="Lecturer_ID" HeaderText="Lecturer ID" />
+        <asp:TemplateField>
+            <ItemTemplate>
+                <asp:Button ID="Button2" runat="server" Text="Approve" OnClick="Button2_Click" />
+                <asp:Button ID="Button1" runat="server" Text="Decline" OnClick="Button1_Click" />
+            </ItemTemplate>
+        </asp:TemplateField>
+    </Columns>
+</asp:GridView>
+
             </h2>
             
         </div>
